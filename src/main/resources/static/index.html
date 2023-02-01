@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    .product-list{
+        display: flex;
+        align-items: center;
+    }
+    .product-item {
+      display: flex;
+      flex-direction:column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .product-image {
+      display:flex;
+      align-items: center;
+      width: 300px;
+      height: 300px;
+    }
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+<h1>Products</h1>
+<div id="product-list" class="product-list"></div>
+
+<script>
+    const getProducts = async () => {
+      const response = await fetch('http://localhost:8080/products');
+      const products = await response.json();
+      return products;
+    };
+
+    const displayProducts = async () => {
+      const products = await getProducts();
+      const productList = document.getElementById('product-list');
+      products.forEach(product => {
+        const productItem = document.createElement('div');
+        productItem.classList.add('product-item');
+
+        const productImage = document.createElement('img');
+        productImage.classList.add('product-image');
+        productImage.src = product.imageUrl;
+
+        const productDesc = document.createElement('p');
+        productDesc.innerText = product.description;
+
+        const productPrice = document.createElement('p');
+        productPrice.classList.add('price');
+        productPrice.innerText = '$'+product.price;
+
+        productItem.appendChild(productImage);
+        productItem.appendChild(productDesc);
+        productItem.appendChild(productPrice);
+        productList.appendChild(productItem);
+      });
+    };
+
+    displayProducts();
+  </script>
+</body>
+</html>

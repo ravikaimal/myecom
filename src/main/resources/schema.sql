@@ -1,0 +1,1 @@
+create table PRODUCT (ID BIGSERIAL PRIMARY KEY,NAME varchar(50), DESCRIPTION varchar(50), PRICE number(10,2), IMAGE_URL varchar(100));
